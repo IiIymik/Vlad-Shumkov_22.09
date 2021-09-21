@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <title>Movies Gallery</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Movies Gallery</title>
 </head>
 <body>
-    <div class="container">
-        <div class="rightSection"></div>
-        <div class="leftSection">
-            <h1 class="title">Movies Gallery</h1>
-            <div class="cardBox">
-                <ul class="cardList list" id="cardList"></ul>
-            </div>
-        </div>
+  <div class="container">
+    <div class="right">
+      <h1>Movies Gallery</h1>
+      <ul class="gallery js-gallery list"></ul>
     </div>
-    <script src="./index.js" type="module"></script>
-    <script src="./openCard.js" type="module"></script>
+    <div class="left">
+      <h2 class="titleFav">Favorite List</h2>
+      <ol class="listFav "></ol>
+    </div>
+  </div>
+
+  <!-- Modal -->
+      <div class="lightbox js-lightbox">
+        <div class="lightbox__overlay"></div>
+      
+        <div class="lightbox__content">
+          <div class="modalCard">
+            <div class="leftPart">
+              <img class="lightbox__image" src="" alt="" width="150px" height="150px"/>
+              <button type="button">Favorite</button>
+              <p class="year"></p>
+              <ul class="listGenres list"></ul>
+            </div>
+            <div class="rightPart">
+                <h2 class="title"></h2>
+                <p class="description"></p>
+                <p class="director">Director: <span class="director__name"></span></p>
+                <p> Starring:
+                <ul class="modalList list"></ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        
+      
+        <button type="button" class="lightbox__button" data-action="close-lightbox"></button>
+      </div>
+  <!-- Modal -->
+  <script src="./index.js" type="module"></script>
+
+  <script src="./fetching.js" type="module"></script>
 </body>
 </html>
