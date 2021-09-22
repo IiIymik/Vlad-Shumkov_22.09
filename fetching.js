@@ -12,8 +12,36 @@ const openDirectEl = document.querySelector('.director__name');
 const openYearEl = document.querySelector('.year');
 const openGenresEl = document.querySelector('.listGenres');
 const favoriteList = document.querySelector('.listFav');
+const openBtnModal = document.querySelector('.button');
 
 let arrFav = [];
+
+const checkLocalSt = localStorage.getItem('Favorite');
+
+
+if (checkLocalSt) {
+    const savedSettings = localStorage.getItem('Favorite');
+    const parsedSettings = JSON.parse(savedSettings);
+    parsedSettings.map((el) => {
+    const element = createFavItem(el);
+    favoriteList.insertAdjacentElement('beforeend', element);
+        arrFav.push(el)
+    })
+    
+    favoriteList.childNodes.forEach(el => {
+        el.addEventListener('click', (e) => {
+        if (e.target.nodeName !== 'BUTTON') return;
+            const index = arrFav.indexOf(e.target.parentElement.children[0].textContent)
+            arrFav.splice(index, 1)
+
+        const del = e.target.parentElement;
+        del.remove();
+    })
+    })
+}
+
+
+
 
 
 const fetchMovies = async () => {
@@ -57,6 +85,10 @@ const createListCards = ({img, year, name, id}) => {
     return liEL;
 };
 
+function addToLocal(e) {
+    localStorage.setItem('Favorite', JSON.stringify(arrFav));
+}
+
 
 fetchMovies().then(data => {
     data.forEach(el => {
@@ -66,14 +98,17 @@ fetchMovies().then(data => {
 
     const list = document.querySelectorAll('.gallery__item')
     list.forEach(el => {
+        const checkArr = arrFav.includes(el.children[1].textContent);
+        if (checkArr) {
+            el.children[3].classList.add('checked')
+        }
         el.addEventListener('click', (e) => {
-
+            const currentCard = e.currentTarget.id;
             if (e.target.nodeName === 'BUTTON') {
+        console.log("🚀 ~ file: fetching.js ~ line 107 ~ el.addEventListener ~ arrFav", arrFav)
                 addFavorite(e)
                 return
             }
-            const currentCard = e.currentTarget.id;
-            console.log("🚀 ~ file: fetching.js ~ line 74 ~ el.addEventListener ~ currentCard", currentCard)
 
             fetchMovie(currentCard).then(data => modalCard(data))
             openModal.classList.toggle('is-open');
@@ -83,7 +118,6 @@ fetchMovies().then(data => {
 });
 
 function modalCard(data) {
-    console.log("🚀 ~ file: fetching.js ~ line 68 ~ modalCard ~ data", data)
     openImgEl.src = data.img;
     openImgEl.alt = data.name;
     openTitleEl.textContent = data.name;
@@ -91,6 +125,13 @@ function modalCard(data) {
     openDirectEl.textContent = data.director;
     openYearEl.textContent = data.year;
     
+    const checkFav = arrFav.includes(data.name);
+    if (checkFav) {
+        openBtnModal.classList.toggle('checked');
+    } else {
+        openBtnModal.classList.remove('checked');
+    }
+
     const arrStarr = data.starring;
     arrStarr.map(el => {
         const elements = createListStarring(el)
@@ -128,11 +169,11 @@ function clearModalEl() {
 
     const list = openStarringEl.childNodes;
     list.forEach(el => {
-        el.textContent = '';
+        el.remove();
     })
      const list2= openGenresEl.childNodes;
     list2.forEach(el => {
-        el.textContent = '';
+        el.remove()
     })
 }
 
@@ -151,17 +192,18 @@ function addFavorite(e) {
     if(notAdd){
         return
     }
-    arrFav.push(nameForFav)
     
+    arrFav.push(nameForFav)
+    localStorage.setItem('Favorite', JSON.stringify(arrFav))
     const currentBtn = e.target;
     currentBtn.classList.toggle('checked');
-    console.log(arrFav);
+    
     const element = createFavItem(nameForFav);
     favoriteList.insertAdjacentElement('beforeend', element);
 
     
     favoriteList.childNodes.forEach(el => {
-       el.addEventListener('click', (e) => {
+        el.addEventListener('click', (e) => {
         if (e.target.nodeName !== 'BUTTON') return;
         currentBtn.classList.remove('checked');
         arrFav.splice(e.target.parentElement.children[0].textContent,1)
@@ -172,6 +214,7 @@ function addFavorite(e) {
         
     
 }
+
 
 
 

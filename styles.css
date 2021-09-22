@@ -155,8 +155,8 @@ gap: 15px;
 
 .lightbox__button {
     position: absolute;
-    top: 150px;
-    right: 150px;
+    top: 15px;
+    right: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,7 +166,7 @@ gap: 15px;
     margin: 0;
     border: none;
     border-radius: 50%;
-    background-color: transparent;
+    background-color: blue;
     color: #fff;
     cursor: pointer;
     transition: background-color var(--animation-duration) var(--timing-function);
@@ -198,6 +198,7 @@ gap: 15px;
     background-repeat: no-repeat;
 }
 
+
 .favoriteBtn.checked{
     background-color: blue;
 }
@@ -208,9 +209,71 @@ gap: 15px;
 }
 
 .modalCard{
+    display: grid;
+    grid-template-columns:  300px auto;
+    gap: 30px;
+
+    padding: 20px;
     width: 1000px;
     height: 500px;
     background-color: #fff;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    
+}
+
+.leftPart{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.rightPart{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+}
+
+.modalList{ 
+    margin-left: 70px;
+}
+
+
+
+.galleryModal__item{
+    padding: 10px;
+    border: 1px solid tomato;
+    /* display: contents; */
+    /* margin-right: 5 px; */
+}
+
+
+.listGenres{
+    display: flex;
+}
+
+
+.button{
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color var(--animation-duration) var(--timing-function);
+    outline: none;
+    background-image: url('../images/star.svg#star');
+    background-position: center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+}
+
+.button.checked {
+    background-color: blue;
 }
